@@ -20,6 +20,16 @@
           inherit system;
         };
       in rec {
+        packages.resize-tty = pkgs.writeShellScriptBin "resize-tty" ''
+          echo -ne '\e[s\e[5000;5000H'
+          IFS='[;' read -p $'\e[6n' -d R -a pos -rs
+          echo -ne '\e[u'
+
+          ${pkgs.coreutils-full}/bin/stty cols "''${pos[2]}" rows "''${pos[1]}"
+
+          export TERM=xterm-256color
+        '';
+
         packages.nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
@@ -27,12 +37,15 @@
             ({pkgs, ...}: {
               system.stateVersion = "22.11";
 
+              services.getty.autologinUser = "neovim";
+
               virtualisation.vmVariant = {
                 virtualisation = {
                   graphics = false;
                 };
               };
 
+              users.groups.neovim = {};
               users.users.neovim = {
                 initialPassword = "example";
                 isNormalUser = true;
@@ -49,9 +62,21 @@
                 useUserPackages = true;
 
                 users.neovim = ({...}: {
-                  config.home.homeDirectory = "/home/neovim";
-                  config.home.stateVersion = "22.11";
                   imports = [self.nixosModules.home-manager.neovim-config];
+
+                  config = {
+                    home = {
+                      homeDirectory = "/home/neovim";
+                      stateVersion = "22.11";
+                    };
+
+                    programs.bash = {
+                      enable = true;
+                      bashrcExtra = ''
+                        ${self.packages.${system}.resize-tty}/bin/resize-tty
+                      '';
+                    };
+                  };
                 });
               };
             })
