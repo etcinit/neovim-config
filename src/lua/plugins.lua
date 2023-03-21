@@ -37,6 +37,8 @@ require('lazy').setup({
   { "folke/lazy.nvim", enabled = false },
   {
     'folke/tokyonight.nvim',
+    lazy = false;
+    priority = 1000;
     config = require('config.tokyonight'),
   },
   {

@@ -1,8 +1,10 @@
 return function()
   local tokyonight = require('tokyonight')
 
+  vim.api.nvim_command("colorscheme tokyonight-moon")
+
   tokyonight.setup({
-    style = "storm",
+    style = "moon",
     --transparent = true,
     styles = {
       sidebars = "dark",
@@ -12,6 +14,4 @@ return function()
     lualine_bold = true,
     use_background = false,
   })
-
-  vim.api.nvim_command("colorscheme tokyonight-moon")
 end
