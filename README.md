@@ -48,10 +48,15 @@ My personal [Neovim][1] configuration as a [home-manager][2] module.
 
 ### Standalone
 
+As a fallback, this configuration can be used without `home-manager`. Expect some rough edges. Dependencies will need to be set up manually, and a compatible version of Neovim needs to be installed:
+
+- Install plugin dependencies: `git`, `gcc`, etc.
 - Clone this repository.
 - Create a soft link between the `src` directory and `~/.config/nvim`.
 - Start `nvim` and wait for `lazy.nvim` to install automatically.
 - Run `:Lazy install`.
+
+While `lazy-lock.json` will still be used, Neovim and dependency versions are not guaranteed to be compatible.
 
 ## Reproducible Environment
 
