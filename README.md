@@ -11,6 +11,48 @@ My personal [Neovim][1] configuration as a [home-manager][2] module.
 - Available as a VM for trying out the configuration and testing.
 - Focused on Rust, Typescript, and Nix development.
 
+## Usage
+
+### Nix Flake
+
+- Review the documentation on using [home-manager with Nix Flakes][7].
+- Add a `neovim-config` input to your Flake:
+
+  ```nix
+  {
+    inputs = {
+      nixpkgs.url = "nixpkgs/nixos-22.11";
+      # ...
+      neovim-config = {
+        url = "git+https://gitlab.chromabits.com/etcinit/neovim-config.git";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+    };
+    # ...
+  }
+  ```
+- Import the module in one of your `home-manager` modules:
+
+  ```nix
+  {inputs, ...}:
+  {
+    # ...
+    imports = [
+      inputs.neovim-config.nixosModules.home-manager.neovim-config↴
+    ];
+  }
+  ```
+- Use `home-manager switch` to apply the new configuration.
+- Start `nvim` and run `:Lazy install`.
+- If you had another pluging manager set up before, you may want to run `:checkhealth lazy` to check for any issues.
+
+### Standalone
+
+- Clone this repository.
+- Create a soft link between the `src` directory and `~/.config/nvim`.
+- Start `nvim` and wait for `lazy.nvim` to install automatically.
+- Run `:Lazy install`.
+
 ## Reproducible Environment
 
 When using this configuration as a `home-manager` module, it is possible to build a reproducible environment. Thanks to Nix's reproducible builds and `lazy.nvim`'s `lazy-lock.json` file, this module will always pull the same versions of all packages/plugins, unless the respective Lockfiles are updated.
@@ -59,3 +101,4 @@ Testing the configuration in a VM is the recommended approach since it doesn't a
 [4]: https://github.com/direnv/direnv
 [5]: https://nixos.org
 [6]: https://github.com/folke/lazy.nvim
+[7]: https://nix-community.github.io/home-manager/index.html#ch-nix-flakes
