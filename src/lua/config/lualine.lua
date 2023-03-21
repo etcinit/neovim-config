@@ -2,8 +2,9 @@ return function()
   local lualine = require('lualine');
 
   lualine.setup {
+    extensions = {'nvim-tree'},
     options = {
-      globalstatus = true,
+      globalstatus = false,
       theme = 'tokyonight',
     },
     sections = {
