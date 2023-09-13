@@ -44,7 +44,7 @@ return function()
   local servers = {
     rust_analyzer = {},
     hls = {},
-    rnix = {},
+    nixd = {},
     tsserver = {},
     eslint = {},
     lua_ls = {
