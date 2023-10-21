@@ -1,5 +1,5 @@
 return function()
-  require("indent_blankline").setup {
+  require("ibl").setup {
     exclude = {
       buftypes = { "terminal" },
     },

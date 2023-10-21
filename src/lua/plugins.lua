@@ -75,6 +75,7 @@ require('lazy').setup({
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
     config = require('config.indent-blankline')
   },
   {
