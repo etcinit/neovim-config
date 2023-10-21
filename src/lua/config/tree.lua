@@ -1,6 +1,5 @@
 return function()
   require('nvim-tree').setup {
-    open_on_setup = false,
     update_focused_file = {
       enable = true,
       ignore_list = {},
@@ -9,10 +8,6 @@ return function()
     view = {
       width = 30,
       side = 'left',
-      mappings = {
-        custom_only = false,
-        list = {}
-      }
     },
     actions = {
       open_file = {
@@ -73,8 +68,20 @@ return function()
 
   -- Opening on startup
   vim.api.nvim_create_autocmd({ 'VimEnter' }, {
-    callback = function()
-      require('nvim-tree.api').tree.open();
+    callback = function(data)
+      -- buffer is a real file on the disk
+      local real_file = vim.fn.filereadable(data.file) == 1
+
+      -- buffer is a [No Name]
+      local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+      -- only files please
+      if not real_file and not no_name then
+        return
+      end
+
+      -- open the tree but don't focus it
+      require("nvim-tree.api").tree.toggle({ focus = false });
     end
   })
 end
