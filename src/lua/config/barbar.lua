@@ -2,6 +2,6 @@ return function()
   local bufferline = require('bufferline')
 
   bufferline.setup {
-    icons = true,
+    icons = { filetype = { enabled = true } },
   }
 end
