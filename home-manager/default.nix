@@ -4,7 +4,25 @@
   ...
 }: {
   imports = [
-    ./lazy-nvim.nix
+    ./plugins/barbar
+    ./plugins/cmp
+    ./plugins/dap
+    ./plugins/dap-ui
+    ./plugins/gitsigns
+    ./plugins/indent-blankline
+    ./plugins/lsp-status
+    ./plugins/lspconfig
+    ./plugins/lualine
+    ./plugins/null-ls
+    ./plugins/nvim-tree
+    ./plugins/nvim-treesitter
+    ./plugins/one-small-step-for-vimkind
+    ./plugins/prettier
+    ./plugins/scrollbar
+    ./plugins/telescope
+    ./plugins/toggleterm
+    ./plugins/tokyonight
+    ./plugins/trouble
   ];
 
   config = {
@@ -12,16 +30,25 @@
       enable = true;
 
       defaultEditor = true;
+
+      extraLuaConfig = ''
+        vim.g.mapleader = ","
+
+        -- Options
+        require('options')
+
+        -- Mappings
+        require('mappings')
+
+        -- Misc
+        vim.api.nvim_command("syntax on")
+        vim.api.nvim_command("filetype plugin indent on")
+
+        -- Hooks
+        local lazyhooks = require('lib.lazyhooks');
+      '';
     };
 
-    home.file.".config/nvim/init.lua" = {
-      source = ../src/init.lua;
-      target = ".config/nvim/init.lua";
-    };
-    home.file.".config/nvim/lazy-lock.initial.json" = {
-      source = ../src/lazy-lock.initial.json;
-      target = ".config/nvim/lazy-lock.initial.json";
-    };
     home.file.".config/nvim/after" = {
       source = ../src/after;
       target = ".config/nvim/after";

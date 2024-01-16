@@ -1,9 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -35,7 +35,7 @@
           modules = [
             home-manager.nixosModules.home-manager
             ({pkgs, ...}: {
-              system.stateVersion = "22.11";
+              system.stateVersion = "23.11";
 
               services.getty.autologinUser = "neovim";
 
@@ -61,13 +61,13 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
 
-                users.neovim = ({...}: {
+                users.neovim = {...}: {
                   imports = [self.nixosModules.home-manager.neovim-config];
 
                   config = {
                     home = {
                       homeDirectory = "/home/neovim";
-                      stateVersion = "22.11";
+                      stateVersion = "23.11";
                     };
 
                     programs.bash = {
@@ -77,7 +77,7 @@
                       '';
                     };
                   };
-                });
+                };
               };
             })
           ];
@@ -97,5 +97,3 @@
       nixosModules.home-manager.neovim-config = import ./home-manager;
     };
 }
-
-
