@@ -6,7 +6,7 @@ My personal [Neovim][1] configuration as a [home-manager][2] module.
 
 ## Overview
 
-- Reproducible environment thanks to [Nix][5] and [lazy.nvim][6]
+- Reproducible environment thanks to [Nix][5]
 - Can be used standalone or imported in a home-manager configuration.
 - Available as a VM for trying out the configuration and testing.
 - Focused on Rust, Typescript, and Nix development.
@@ -43,32 +43,18 @@ My personal [Neovim][1] configuration as a [home-manager][2] module.
   }
   ```
 - Use `home-manager switch` to apply the new configuration.
-- Start `nvim` and run `:Lazy install`.
-- If you had another pluging manager set up before, you may want to run `:checkhealth lazy` to check for any issues.
-
-### Standalone
-
-As a fallback, this configuration can be used without `home-manager`. Expect some rough edges. Dependencies will need to be set up manually, and a compatible version of Neovim needs to be installed:
-
-- Install plugin dependencies: `git`, `gcc`, etc.
-- Clone this repository.
-- Create a soft link between the `src` directory and `~/.config/nvim`.
-- Start `nvim` and wait for `lazy.nvim` to install automatically.
-- Run `:Lazy install`.
-
-While `lazy-lock.json` will still be used, Neovim and dependency versions are not guaranteed to be compatible.
 
 ## Reproducible Environment
 
-When using this configuration as a `home-manager` module, it is possible to build a reproducible environment. Thanks to Nix's reproducible builds and `lazy.nvim`'s `lazy-lock.json` file, this module will always pull the same versions of all packages/plugins, unless the respective Lockfiles are updated.
+When using this configuration as a `home-manager` module, it is possible to build a reproducible environment. Thanks to Nix's reproducible builds, this module will always pull the same versions of all packages/plugins, unless the flake lock is updated.
 
-While `home-manager` offers a module for managing Neovim plugins, I've opted for using `lazy.nvim` as the Neovim plugin manager to allow for this configuration to be usable in environments where Nix is not available or where `home-manager` is not usable.
-
-### `lazy-lock.json`
-
-On first use, the configuration will create a `lazy-lock.json` file from a static copy. This allows the end-user to upgrade plugins over time without sacrificing the reproducible aspect of the configuration.
-
-If a plugin update breaks the configuration, it is possible to revert the lockfile. Simply delete `~/.config/nvim/lazy-lock.json`, restart Neovim, and use the `:Lazy restore` command to revert all plugins to the versions in the Lockfile.
+A previous version of this module made use of Lazy.nvim which offered faster
+startup times and a path for using this configuration without Nix. However, it
+also resulted in frequent broken setups when attempting to update packages. In
+an effort to simplify my setup, I've opted for a full Nix-based solution,
+specially now that most of my systems use Nix. This results in slightly slower
+startup times (a few 100 ms), but most plugins are now using definitions from
+nixpkgs. Version upgrades will follow the NixOS release cycle.
 
 ## Development
 
@@ -105,5 +91,4 @@ Testing the configuration in a VM is the recommended approach since it doesn't a
 [3]: https://nixos.org/manual/nix/unstable/command-ref/new-cli/nix3-flake.html#url-like-syntax
 [4]: https://github.com/direnv/direnv
 [5]: https://nixos.org
-[6]: https://github.com/folke/lazy.nvim
 [7]: https://nix-community.github.io/home-manager/index.html#ch-nix-flakes
