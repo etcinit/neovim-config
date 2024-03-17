@@ -47,6 +47,7 @@ local setup_lspconfig = function()
     nixd = {},
     tsserver = {},
     eslint = {},
+    pyright = {},
     lua_ls = {
       settings = {
         Lua = {
