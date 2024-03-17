@@ -48,6 +48,7 @@ local setup_lspconfig = function()
     tsserver = {},
     eslint = {},
     pyright = {},
+    ruff_lsp = {},
     lua_ls = {
       settings = {
         Lua = {
