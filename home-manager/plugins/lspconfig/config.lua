@@ -46,8 +46,10 @@ local setup_lspconfig = function()
     hls = {},
     nil_ls = {
       settings = {
-        formatting = {
-          command = { "nixfmt" },
+        ['nil'] = {
+          formatting = {
+            command = { "nixfmt" },
+          },
         },
       },
     },
