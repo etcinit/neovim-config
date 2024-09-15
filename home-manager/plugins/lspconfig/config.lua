@@ -44,7 +44,13 @@ local setup_lspconfig = function()
   local servers = {
     rust_analyzer = {},
     hls = {},
-    ['nil'] = {},
+    ['nil'] = {
+      settings = {
+        formatting = {
+          command = { "nixfmt" },
+        },
+      },
+    },
     tsserver = {},
     eslint = {},
     basedpyright = {},
