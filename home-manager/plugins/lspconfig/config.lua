@@ -53,10 +53,10 @@ local setup_lspconfig = function()
         },
       },
     },
-    tsserver = {},
+    ts_ls = {},
     eslint = {},
     basedpyright = {},
-    ruff_lsp = {},
+    ruff = {},
     lua_ls = {
       settings = {
         Lua = {
