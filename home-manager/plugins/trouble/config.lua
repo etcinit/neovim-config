@@ -9,26 +9,29 @@ local setup_trouble = function()
     noremap = true,
   }
 
-  map('n', '<leader>xx', trouble.toggle, map_opts)
+  map('n', '<leader>xx', trouble.toggle, map_opts, "Trouble: Toggle")
   map(
     'n',
     '<leader>xw',
     function() trouble.toggle('workspace_diagnostics') end,
-    map_opts
+    map_opts,
+    "Trouble: Workspace Diagnostics"
   )
   map(
     'n',
     '<leader>xd',
     function() trouble.toggle('document_diagnostics') end,
-    map_opts
+    map_opts,
+    "Trouble: Document Diagnostics"
   )
-  map('n', '<leader>xl', function() trouble.toggle('loclist') end, map_opts)
-  map('n', '<leader>xq', function() trouble.toggle('quickfix') end, map_opts)
+  map('n', '<leader>xl', function() trouble.toggle('loclist') end, map_opts, "Trouble: Location List")
+  map('n', '<leader>xq', function() trouble.toggle('quickfix') end, map_opts, "Trouble: Quickfix")
   map(
     'n',
     '<leader>xr',
     function() trouble.toggle('lsp_references') end,
-    map_opts
+    map_opts,
+    "Trouble: LSP References"
   )
 end
 

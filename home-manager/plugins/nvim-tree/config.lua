@@ -38,13 +38,13 @@ local setup_tree = function()
     local nt_api = require("nvim-tree.api")
 
     nt_api.tree.toggle()
-  end)
+  end, { desc = "Neovim Tree: Toggle" })
 
   vim.keymap.set('n', '<leader>o', function()
     local nt_api = require("nvim-tree.api")
 
     nt_api.tree.focus()
-  end)
+  end, { desc = "Neovim Tree: Focus" })
 
   -- Barbar Integration
   local nvim_tree_events = require('nvim-tree.events')

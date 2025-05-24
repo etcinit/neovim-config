@@ -7,6 +7,7 @@
         plugin = pkgs.vimPlugins.telescope-nvim;
       }
       pkgs.vimPlugins.plenary-nvim
+      pkgs.vimPlugins.telescope-ui-select-nvim
     ];
   };
 }
