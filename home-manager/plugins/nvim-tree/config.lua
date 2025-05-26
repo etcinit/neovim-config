@@ -8,10 +8,11 @@ local setup_tree = function()
     view = {
       width = 30,
       side = 'left',
+      preserve_window_proportions = true,
     },
     actions = {
       open_file = {
-        resize_window = false,
+        resize_window = true,
       },
     },
     renderer = {
