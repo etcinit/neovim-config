@@ -25,7 +25,12 @@ local setup_cmp = function()
       }),
       ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_next_item()
+          local entry = cmp.get_selected_entry()
+          if not entry then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+          end
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
         else
