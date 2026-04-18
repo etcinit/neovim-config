@@ -6,7 +6,7 @@
 
 ## P1 — Dead Code / No-ops
 
-- [ ] **`home-manager/plugins/lsp-status/` still exists on disk.** The import was removed from `default.nix` but the directory with `default.nix` and `config.lua` remains. Should be deleted.
+- [x] **`home-manager/plugins/lsp-status/` still exists on disk.** The import was removed from `default.nix` but the directory with `default.nix` and `config.lua` remains. Should be deleted.
 - [ ] **null-ls does nothing.** `null-ls/config.lua` is `require('null-ls').setup({})` — zero sources configured. It adds startup cost with no effect. Either configure sources or remove it.
 - [ ] **conform plugin is a stub.** `home-manager/plugins/conform/default.nix` exists with no `config.lua` and isn't imported in `default.nix`. Either finish it or remove it.
 
