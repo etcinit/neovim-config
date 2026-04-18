@@ -7,7 +7,7 @@ require('lualine').setup {
   sections = {
     lualine_c = {
       'file',
-      "require'lsp-status'.status()",
+      "vim.lsp.status()",
     }
   }
 }

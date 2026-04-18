@@ -10,7 +10,6 @@
     ./plugins/dap-ui
     ./plugins/gitsigns
     ./plugins/indent-blankline
-    ./plugins/lsp-status
     ./plugins/lspconfig
     ./plugins/lualine
     ./plugins/null-ls

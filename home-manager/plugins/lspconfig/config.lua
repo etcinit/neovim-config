@@ -1,11 +1,9 @@
-local lsp_status = require('lsp-status')
 local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Shared config for all LSP servers.
 vim.lsp.config('*', {
   capabilities = vim.tbl_deep_extend(
     "force",
-    lsp_status.capabilities,
     cmp_capabilities,
     {
       textDocument = {
@@ -63,10 +61,9 @@ vim.lsp.enable({
   'lua_ls',
 })
 
--- LSP keybindings and lsp-status integration via LspAttach autocmd.
+-- LSP keybindings via LspAttach autocmd.
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
     local bufnr = args.buf
     local opts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -95,9 +92,5 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>f', function()
       vim.lsp.buf.format({ async = true })
     end, opts)
-
-    if client then
-      lsp_status.on_attach(client)
-    end
   end,
 })
