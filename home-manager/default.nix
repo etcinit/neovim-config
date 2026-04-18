@@ -12,7 +12,6 @@
     ./plugins/indent-blankline
     ./plugins/lspconfig
     ./plugins/lualine
-    ./plugins/null-ls
     ./plugins/nvim-tree
     ./plugins/nvim-treesitter
     ./plugins/one-small-step-for-vimkind
