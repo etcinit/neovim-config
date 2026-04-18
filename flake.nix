@@ -1,21 +1,23 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = {
-    self,
-    flake-utils,
-    nixpkgs,
-    home-manager,
-  }:
+  outputs =
+    {
+      self,
+      flake-utils,
+      nixpkgs,
+      home-manager,
+    }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
+      system:
+      let
         pkgs = (import nixpkgs) {
           inherit system;
         };
@@ -39,7 +41,7 @@
               home.stateVersion = "23.11";
 
               # Inject the runtime plugin so lua/options.lua etc. are available.
-              programs.neovim.plugins = [runtimePlugin];
+              programs.neovim.plugins = [ runtimePlugin ];
             }
           ];
         };
@@ -49,10 +51,9 @@
         # Extract the init.lua that home-manager generates (it contains
         # extraLuaConfig + all plugin configs). Without this, neovim launches
         # with plugins on rtp but no configuration applied.
-        initLua =
-          pkgs.writeText "init.lua"
-          hmConfig.config.xdg.configFile."nvim/init.lua".text;
-      in {
+        initLua = pkgs.writeText "init.lua" hmConfig.config.xdg.configFile."nvim/init.lua".text;
+      in
+      {
         packages =
           {
             resize-tty = pkgs.writeShellScriptBin "resize-tty" ''
@@ -77,7 +78,8 @@
               modules = [
                 home-manager.nixosModules.home-manager
                 (
-                  {pkgs, ...}: {
+                  { pkgs, ... }:
+                  {
                     system.stateVersion = "23.11";
 
                     services.getty.autologinUser = "neovim";
@@ -88,23 +90,23 @@
                       };
                     };
 
-                    users.groups.neovim = {};
+                    users.groups.neovim = { };
                     users.users.neovim = {
                       initialPassword = "example";
                       isNormalUser = true;
                       group = "neovim";
-                      extraGroups = ["wheel"];
+                      extraGroups = [ "wheel" ];
                     };
 
                     security.sudo = {
                       enable = true;
                       extraRules = [
                         {
-                          users = ["neovim"];
+                          users = [ "neovim" ];
                           commands = [
                             {
                               command = "/run/current-system/sw/bin/shutdown";
-                              options = ["NOPASSWD"];
+                              options = [ "NOPASSWD" ];
                             }
                           ];
                         }
@@ -120,23 +122,25 @@
                       useGlobalPkgs = true;
                       useUserPackages = true;
 
-                      users.neovim = {...}: {
-                        imports = [self.nixosModules.home-manager.neovim-config];
+                      users.neovim =
+                        { ... }:
+                        {
+                          imports = [ self.nixosModules.home-manager.neovim-config ];
 
-                        config = {
-                          home = {
-                            homeDirectory = "/home/neovim";
-                            stateVersion = "23.11";
-                          };
+                          config = {
+                            home = {
+                              homeDirectory = "/home/neovim";
+                              stateVersion = "23.11";
+                            };
 
-                          programs.bash = {
-                            enable = true;
-                            bashrcExtra = ''
-                              ${self.packages.${system}.resize-tty}/bin/resize-tty
-                            '';
+                            programs.bash = {
+                              enable = true;
+                              bashrcExtra = ''
+                                ${self.packages.${system}.resize-tty}/bin/resize-tty
+                              '';
+                            };
                           };
                         };
-                      };
                     };
                   }
                 )
@@ -145,14 +149,16 @@
           };
 
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs;
+          nativeBuildInputs =
+            with pkgs;
             pkgs.lib.optional stdenv.isLinux nixos-rebuild
             ++ [
-              sumneko-lua-language-server
+              lua-language-server
+              nixfmt-rfc-style
             ];
         };
 
-        formatter = nixpkgs.legacyPackages.${system}.alejandra;
+        formatter = nixpkgs.legacyPackages.${system}.nixfmt-tree;
       }
     )
     // {
