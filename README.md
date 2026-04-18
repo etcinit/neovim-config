@@ -60,13 +60,23 @@ nixpkgs. Version upgrades will follow the NixOS release cycle.
 
 For a development environment, you can use `nix develop` to open a shell with tools used to work on this module (Lua LSP, `nixos-rebuild`, etc).
 
-The configuration can be tested on an isolated VM or by referencing it locally from another Nix flake.
+The configuration can be tested quickly with `nix run`, on an isolated VM (Linux only), or by referencing it locally from another Nix flake.
 
 [Direnv][4] is also pre-configured. Use `direnv allow` to automatically enter the devshell when `cd`-ing to the repository.
 
-### Development VM
+### Quick Test
 
-Testing the configuration in a VM is the recommended approach since it doesn't alter your current system. The approach uses `nixos-rebuild build-vm` to create and launch a QEMU VM with NixOS and a user pre-configured with home-manager:
+The fastest way to try the configuration on macOS or Linux without altering your system:
+
+```sh
+nix run .          # or: nix run .#neovim
+```
+
+This evaluates the home-manager module, bundles `src/` as a runtime plugin, and launches neovim with `NVIM_APPNAME=nvim-config-test` so it is fully isolated from your existing `~/.config/nvim/`.
+
+### Development VM (Linux only)
+
+Testing the configuration in a VM uses `nixos-rebuild build-vm` to create and launch a QEMU VM with NixOS and a user pre-configured with home-manager:
 
 - Clone this repository locally.
 - Enter the development shell (`nix develop` or use Direnv).
