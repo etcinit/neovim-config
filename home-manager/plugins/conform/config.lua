@@ -13,7 +13,10 @@ local prettier_filetypes = {
   "yaml",
 }
 
-local formatters_by_ft = {}
+local formatters_by_ft = {
+  nix = { "nixfmt" },
+}
+
 for _, ft in ipairs(prettier_filetypes) do
   formatters_by_ft[ft] = { "prettierd" }
 end
@@ -22,6 +25,6 @@ require("conform").setup({
   formatters_by_ft = formatters_by_ft,
   format_on_save = {
     timeout_ms = 2000,
-    lsp_format = "fallback",
+    lsp_format = "prefer",
   },
 })
