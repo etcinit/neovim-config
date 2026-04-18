@@ -7,7 +7,7 @@ require('lualine').setup {
   sections = {
     lualine_c = {
       'filename',
-      function() return vim.lsp.status() end,
+      function() return vim.lsp.status():gsub("%%", "%%%%") end,
     }
   }
 }
