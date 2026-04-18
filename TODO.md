@@ -17,7 +17,7 @@
 
 ## P3 — Redundant / Unnecessary Configuration
 
-- [ ] **`syntax on` and `filetype plugin indent on` are Neovim defaults.** These have been enabled by default since Neovim 0.8. The two `vim.api.nvim_command` calls in `home-manager/default.nix:44-45` can be removed.
+- [x] **`syntax on` and `filetype plugin indent on` are Neovim defaults.** These have been enabled by default since Neovim 0.8. The two `vim.api.nvim_command` calls in `home-manager/default.nix:44-45` can be removed.
 - [ ] **Custom `ftdetect/typescript.lua` is unnecessary.** Neovim's built-in filetype detection already handles `.tsx` files. The custom detection (`src/ftdetect/typescript.lua`) may also conflict with or duplicate the built-in.
 - [ ] **`vim.o.showmode = false` without lualine mode section.** The `showmode` disable in `src/lua/options.lua:18` is typically paired with a statusline that displays the mode. Lualine's `sections` config only defines `lualine_c`, leaving `lualine_a` at its default (which does show mode), so this works — but verify the intent.
 

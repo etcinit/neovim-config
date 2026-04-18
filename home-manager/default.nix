@@ -32,16 +32,8 @@
       extraLuaConfig = ''
         vim.g.mapleader = ","
 
-        -- Options
         require('options')
-
-        -- Mappings
         require('mappings')
-
-        -- Misc
-        vim.api.nvim_command("syntax on")
-        vim.api.nvim_command("filetype plugin indent on")
-
       '';
     };
 
