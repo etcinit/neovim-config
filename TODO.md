@@ -29,6 +29,6 @@
 
 ## P5 — Missed Opportunities
 
-- [ ] **gitsigns has no keybindings.** `gitsigns/config.lua` is just `require('gitsigns').setup()`. Common bindings like hunk navigation (`]c`/`[c`), stage hunk, blame line, etc. are missing.
+- [x] **gitsigns has no keybindings.** `gitsigns/config.lua` is just `require('gitsigns').setup()`. Common bindings like hunk navigation (`]c`/`[c`), stage hunk, blame line, etc. are missing.
 - [ ] **dap-ui isn't wired to dap events.** `dap-ui/config.lua` is just `require('dapui').setup()`. Typically you'd add listeners to auto-open/close the UI on debug session start/end.
 - [ ] **barbar has minimal config.** Only sets filetype icons. Consider adding close button behavior, animation settings, or sort order if the defaults don't match your preferences.
