@@ -1,12 +1,11 @@
 local utils = require('lib.utils')
 local map = utils.map
 
--- Make life easier
-map('n', ':W', ':w')
-map('n', ':Q', ':q')
-map('n', ':wQ', ':wq')
-map('n', ':WQ', ':wq')
-map('n', ':Wq', ':wq')
+-- Command typo aliases
+vim.api.nvim_create_user_command('W', 'w', {})
+vim.api.nvim_create_user_command('Q', 'q', {})
+vim.api.nvim_create_user_command('Wq', 'wq', {})
+vim.api.nvim_create_user_command('WQ', 'wq', {})
 
 -- Buffer Navigation
 map('', '<S-Up>', '<C-w><Up>')
