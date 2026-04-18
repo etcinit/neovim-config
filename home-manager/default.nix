@@ -41,11 +41,7 @@
       source = ../src/after;
       target = ".config/nvim/after";
     };
-    home.file.".config/nvim/ftdetect" = {
-      source = ../src/ftdetect;
-      target = ".config/nvim/ftdetect";
-    };
-    home.file.".config/nvim/lua" = {
+home.file.".config/nvim/lua" = {
       source = ../src/lua;
       target = ".config/nvim/lua";
     };
