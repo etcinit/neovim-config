@@ -21,6 +21,7 @@
     ./plugins/toggleterm
     ./plugins/tokyonight
     ./plugins/trouble
+    ./plugins/which-key
   ];
 
   config = {

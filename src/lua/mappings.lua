@@ -8,16 +8,16 @@ vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('WQ', 'wq', {})
 
 -- Buffer Navigation
-map('', '<S-Up>', '<C-w><Up>')
-map('', '<S-Down>', '<C-w><Down>')
-map('', '<S-Right>', '<C-w><Right>')
-map('', '<S-Left>', '<C-w><Left>')
+map('', '<S-Up>', '<C-w><Up>', {}, "Window: Move up")
+map('', '<S-Down>', '<C-w><Down>', {}, "Window: Move down")
+map('', '<S-Right>', '<C-w><Right>', {}, "Window: Move right")
+map('', '<S-Left>', '<C-w><Left>', {}, "Window: Move left")
 
 -- Buffer Switching
-map('', 'gn', ':bn<CR>')
-map('', 'gp', ':bp<CR>')
-map('', 'gd', ':bd<CR>')
+map('', 'gn', ':bn<CR>', {}, "Buffer: Next")
+map('', 'gp', ':bp<CR>', {}, "Buffer: Previous")
+map('', 'gd', ':bd<CR>', {}, "Buffer: Delete")
 
 -- Tab Switching (Ctrl-Tab)
-map('', '<C-Tab>', ':<C-U>tabnext<CR>', { noremap = true })
-map('', '<C-S-Tab>', ':<C-U>tabprevious<CR>', { noremap = true })
+map('', '<C-Tab>', ':<C-U>tabnext<CR>', { noremap = true }, "Tab: Next")
+map('', '<C-S-Tab>', ':<C-U>tabprevious<CR>', { noremap = true }, "Tab: Previous")
