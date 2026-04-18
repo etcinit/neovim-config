@@ -6,8 +6,8 @@ require('lualine').setup {
   },
   sections = {
     lualine_c = {
-      'file',
-      "vim.lsp.status()",
+      'filename',
+      function() return vim.lsp.status() end,
     }
   }
 }
