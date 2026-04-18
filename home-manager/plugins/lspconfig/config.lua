@@ -1,15 +1,74 @@
-local setup_lspconfig = function()
-  local lspconfig = require('lspconfig')
-  local lsp_status = require('lsp-status')
+local lsp_status = require('lsp-status')
+local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-  local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-  local on_attach = function(client, bufnr)
-    local opts = {
-      noremap = true,
-      silent = true,
-      buffer = bufnr,
+-- Shared config for all LSP servers.
+vim.lsp.config('*', {
+  capabilities = vim.tbl_deep_extend(
+    "force",
+    lsp_status.capabilities,
+    cmp_capabilities,
+    {
+      textDocument = {
+        completion = {
+          completionItem = {
+            insertReplaceSupport = true,
+            preselectSupport = true,
+            snippetSupport = true,
+          },
+        },
+      },
     }
+  ),
+})
+
+-- Server-specific configs (servers with custom settings).
+vim.lsp.config('nil_ls', {
+  settings = {
+    ['nil'] = {
+      formatting = {
+        command = { "nixfmt" },
+      },
+    },
+  },
+})
+
+vim.lsp.config('lua_ls', {
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+})
+
+-- Enable all LSP servers.
+vim.lsp.enable({
+  'rust_analyzer',
+  'hls',
+  'nil_ls',
+  'ts_ls',
+  'eslint',
+  'basedpyright',
+  'ruff',
+  'lua_ls',
+})
+
+-- LSP keybindings and lsp-status integration via LspAttach autocmd.
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local bufnr = args.buf
+    local opts = { noremap = true, silent = true, buffer = bufnr }
 
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -25,7 +84,6 @@ local setup_lspconfig = function()
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    --vim.keymap.set('v', '<leader>ca', vim.lsp.buf.range_code_action, opts)
 
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
@@ -34,80 +92,12 @@ local setup_lspconfig = function()
     vim.keymap.set('n', '<leader>so', function()
       require('telescope.builtin').lsp_document_symbols()
     end, opts)
-    vim.keymap.set('n', '<space>f', function ()
-      vim.lsp.buf.format { async = true }
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format({ async = true })
     end, opts)
 
-    lsp_status.on_attach(client)
-  end
-
-  local servers = {
-    rust_analyzer = {},
-    hls = {},
-    nil_ls = {
-      settings = {
-        ['nil'] = {
-          formatting = {
-            command = { "nixfmt" },
-          },
-        },
-      },
-    },
-    ts_ls = {},
-    eslint = {},
-    basedpyright = {},
-    ruff = {},
-    lua_ls = {
-      settings = {
-        Lua = {
-          runtime = {
-            -- Neovim uses LuaJIT.
-            version = 'LuaJIT',
-          },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global.
-            globals = {'vim'},
-          },
-          workspace = {
-            -- Make the server aware of the Neovim runtime.
-            library = vim.api.nvim_get_runtime_file("", true),
-          },
-          -- Do not send telemetry data containing a randomized but unique
-          -- identifier.
-          telemetry = {
-            enable = false,
-          },
-        }
-      }
-    },
-  }
-
-  for ls, config in pairs(servers) do
-    local capabilities = vim.tbl_extend(
-      "keep",
-      config.capabilities or {},
-      lspconfig[ls].capabilities or {},
-      lsp_status.capabilities,
-      cmp_capabilities,
-      {
-        textDocument = {
-          completion = {
-            completionItem = {
-              insertReplaceSupport = true,
-              preselectSupport = true,
-              snippetSupport = true
-            }
-          }
-        }
-      }
-    )
-
-    lspconfig[ls].setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      settings = config.settings or {},
-    }
-  end
-end
-
-setup_lspconfig()
+    if client then
+      lsp_status.on_attach(client)
+    end
+  end,
+})
