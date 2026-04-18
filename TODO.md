@@ -24,7 +24,7 @@
 ## P4 — Modernization
 
 - [x] **Deprecated `devShell` flake attribute.** `nix flake check` already warns about this. Change `devShell` to `devShells.default` in `flake.nix:143`.
-- [ ] **`vim.api.nvim_command()` should be `vim.cmd()`.** Used in `home-manager/default.nix:44-45` (if kept) and the tokyonight colorscheme line. `vim.cmd` is the idiomatic API since Neovim 0.7.
+- [x] **`vim.api.nvim_command()` should be `vim.cmd()`.** The default.nix usages were already removed (P3). Replaced the remaining one in tokyonight.
 - [ ] **Command-mode typo remaps use `nvim_command`.** `src/lua/mappings.lua:4-8` defines `:W`, `:Q`, etc. using `vim.api.nvim_command("command ...")`. These should use `vim.api.nvim_create_user_command()`.
 
 ## P5 — Missed Opportunities

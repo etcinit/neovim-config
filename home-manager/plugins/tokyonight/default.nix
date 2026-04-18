@@ -6,7 +6,7 @@
         config = ''
           local tokyonight = require('tokyonight')
 
-          vim.api.nvim_command("colorscheme tokyonight-moon")
+          vim.cmd("colorscheme tokyonight-moon")
 
           tokyonight.setup({
             style = "moon",
