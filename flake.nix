@@ -144,7 +144,7 @@
             };
           };
 
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs;
             pkgs.lib.optional stdenv.isLinux nixos-rebuild
             ++ [
