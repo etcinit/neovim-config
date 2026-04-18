@@ -4,7 +4,7 @@
       {
         type = "lua";
         config = builtins.readFile ./config.lua;
-        plugin = pkgs.vimPlugins.null-ls-nvim;
+        plugin = pkgs.vimPlugins.none-ls-nvim;
       }
       pkgs.vimPlugins.plenary-nvim
     ];
