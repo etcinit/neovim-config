@@ -59,6 +59,7 @@ vim.lsp.enable({
   'basedpyright',
   'ruff',
   'lua_ls',
+  'nixd',
 })
 
 -- LSP keybindings via LspAttach autocmd.
@@ -70,22 +71,30 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('force', opts, { desc = "LSP: Go to declaration" }))
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('force', opts, { desc = "LSP: Go to definition" }))
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('force', opts, { desc = "LSP: Hover" }))
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('force', opts, { desc = "LSP: Go to implementation" }))
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('force', opts, { desc = "LSP: Signature help" }))
-    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, vim.tbl_extend('force', opts, { desc = "LSP: Add workspace folder" }))
-    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, vim.tbl_extend('force', opts, { desc = "LSP: Remove workspace folder" }))
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation,
+      vim.tbl_extend('force', opts, { desc = "LSP: Go to implementation" }))
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help,
+      vim.tbl_extend('force', opts, { desc = "LSP: Signature help" }))
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
+      vim.tbl_extend('force', opts, { desc = "LSP: Add workspace folder" }))
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
+      vim.tbl_extend('force', opts, { desc = "LSP: Remove workspace folder" }))
     vim.keymap.set('n', '<leader>wl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, vim.tbl_extend('force', opts, { desc = "LSP: List workspace folders" }))
-    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, vim.tbl_extend('force', opts, { desc = "LSP: Type definition" }))
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
+      vim.tbl_extend('force', opts, { desc = "LSP: Type definition" }))
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = "LSP: Rename symbol" }))
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('force', opts, { desc = "LSP: Find references" }))
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('force', opts, { desc = "LSP: Code action" }))
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+      vim.tbl_extend('force', opts, { desc = "LSP: Code action" }))
 
-    vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, vim.tbl_extend('force', opts, { desc = "Diagnostics: Open float" }))
+    vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float,
+      vim.tbl_extend('force', opts, { desc = "Diagnostics: Open float" }))
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, vim.tbl_extend('force', opts, { desc = "Diagnostics: Previous" }))
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, vim.tbl_extend('force', opts, { desc = "Diagnostics: Next" }))
-    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, vim.tbl_extend('force', opts, { desc = "Diagnostics: Set loclist" }))
+    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
+      vim.tbl_extend('force', opts, { desc = "Diagnostics: Set loclist" }))
     vim.keymap.set('n', '<leader>so', function()
       require('telescope.builtin').lsp_document_symbols()
     end, vim.tbl_extend('force', opts, { desc = "LSP: Document symbols" }))
