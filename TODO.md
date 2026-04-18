@@ -12,7 +12,7 @@
 
 ## P2 — Unmaintained / Outdated Plugins
 
-- [ ] **prettier.nvim is archived.** Fetched from GitHub at a June 2023 commit (`home-manager/plugins/prettier/default.nix:11`). The repo is no longer maintained. conform.nvim is the standard replacement for formatting, and the stub already exists in this config.
+- [x] **prettier.nvim is archived.** Fetched from GitHub at a June 2023 commit (`home-manager/plugins/prettier/default.nix:11`). The repo is no longer maintained. conform.nvim is the standard replacement for formatting, and the stub already exists in this config.
 - [x] **one-small-step-for-vimkind pinned to a March 2023 commit** (`home-manager/plugins/one-small-step-for-vimkind/default.nix:10`). Check if nixpkgs has a `vimPlugins` entry for it to avoid manual `fetchFromGitHub` pinning.
 
 ## P3 — Redundant / Unnecessary Configuration

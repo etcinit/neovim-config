@@ -15,7 +15,7 @@
     ./plugins/nvim-tree
     ./plugins/nvim-treesitter
     ./plugins/one-small-step-for-vimkind
-    ./plugins/prettier
+    ./plugins/conform
     ./plugins/scrollbar
     ./plugins/telescope
     ./plugins/toggleterm
@@ -42,8 +42,6 @@
         vim.api.nvim_command("syntax on")
         vim.api.nvim_command("filetype plugin indent on")
 
-        -- Hooks
-        local lazyhooks = require('lib.lazyhooks');
       '';
     };
 
