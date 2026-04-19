@@ -114,7 +114,7 @@
 
                   environment.systemPackages = [
                     pkgs.git
-                    pkgs.sumneko-lua-language-server
+                    pkgs.lua-language-server
                   ];
 
                   home-manager = {
