@@ -16,7 +16,7 @@ map('', '<S-Left>', '<C-w><Left>', {}, "Window: Move left")
 -- Buffer Switching
 map('', 'gn', ':bn<CR>', {}, "Buffer: Next")
 map('', 'gp', ':bp<CR>', {}, "Buffer: Previous")
-map('', 'gd', ':bd<CR>', {}, "Buffer: Delete")
+map('n', '<leader>bd', ':bd<CR>', {}, "Buffer: Delete")
 
 -- Tab Switching (Ctrl-Tab)
 map('', '<C-Tab>', ':<C-U>tabnext<CR>', { noremap = true }, "Tab: Next")
