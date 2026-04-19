@@ -33,9 +33,6 @@ opts.background = 'dark'
 -- Ruler
 opts.colorcolumn = '80'
 
--- Buffers
-opts.hidden = true
-
 -- Status Line
 opts.showmode = false
 opts.laststatus = 2
