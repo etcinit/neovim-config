@@ -3,9 +3,6 @@ local opts = vim.o
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- I/O
-opts.encoding = 'utf-8'
-
 -- Input
 opts.mouse = 'a'
 
@@ -35,7 +32,6 @@ opts.colorcolumn = '80'
 
 -- Status Line
 opts.showmode = false
-opts.laststatus = 2
 
 -- Highlight
 opts.cursorline = true
