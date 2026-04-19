@@ -3,10 +3,13 @@ local setup_telescope = function()
   local builtin = require('telescope.builtin')
   local map = require('lib.utils').map
 
-  map('n', '<leader>fa', builtin.builtin, {}, "Telescope: Find Finders")
-  map('n', '<leader>ff', builtin.find_files, {}, "Telescope: Find Files")
-  map('n', '<leader>fb', builtin.buffers, {}, "Telescope: Find Buffers")
-  map('n', '<leader>sg', builtin.live_grep, {}, "Search: Live Grep")
+  -- Files / buffers
+  map('n', '<leader>ff', builtin.find_files, {}, "Find: Files")
+  map('n', '<leader>fb', builtin.buffers, {}, "Find: Buffers")
+  map('n', '<leader>fg', builtin.live_grep, {}, "Find: Grep")
+
+  -- General search
+  map('n', '<leader>sa', builtin.builtin, {}, "Search: Telescope Finders")
   map('n', '<leader>sh', builtin.help_tags, {}, "Search: Help Tags")
   map('n', '<leader>sc', builtin.commands, {}, "Search: Commands")
   map('n', '<leader>sk', builtin.keymaps, {}, "Search: Keymaps")
