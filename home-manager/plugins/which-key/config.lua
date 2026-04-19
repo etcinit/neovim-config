@@ -7,10 +7,10 @@ wk.add({
   { "<leader>x", group = "Trouble" },
   { "<leader>h", group = "Git Hunks" },
   { "<leader>w", group = "Workspace" },
+  { "<leader>b", group = "Buffer" },
   { "<leader>d", group = "Debug/Diagnostics" },
   { "<leader>c", group = "Code" },
   { "<leader>s", group = "Symbols" },
-  { "<leader>r", group = "Refactor" },
   { "<leader>l", group = "Log" },
   { "g", group = "Go to" },
 })
