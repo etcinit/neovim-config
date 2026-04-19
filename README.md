@@ -11,6 +11,48 @@ My personal [Neovim][1] configuration as a [home-manager][2] module.
 - Available as a VM for trying out the configuration and testing.
 - Focused on Rust, Typescript, and Nix development.
 
+## Usage
+
+### On-demand
+
+To give this config a quick try, you can run:
+
+```
+nix run git+https://gitlab.chromabits.com/etcinit/neovim-config.git
+```
+
+### Nix Flake
+
+- Review the documentation on using [home-manager with Nix Flakes][7].
+- Add a `neovim-config` input to your Flake:
+
+  ```nix
+  {
+    inputs = {
+      nixpkgs.url = "nixpkgs/nixos-22.11";
+      # ...
+      neovim-config = {
+        url = "git+https://gitlab.chromabits.com/etcinit/neovim-config.git";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+    };
+    # ...
+  }
+  ```
+- Import the module in one of your `home-manager` modules:
+
+  ```nix
+  {inputs, ...}:
+  {
+    # ...
+    imports = [
+      inputs.neovim-config.nixosModules.home-manager.neovim-config↴
+    ];
+  }
+  ```
+- Use `home-manager switch` to apply the new configuration.
+
+
 ## Configuration
 
 The leader key is `,`. Press it and wait to see available bindings via [which-key](https://github.com/folke/which-key.nvim).
@@ -125,40 +167,15 @@ The leader key is `,`. Press it and wait to see available bindings via [which-ke
 | `<leader>o`   | Focus file tree      |
 | `?`           | Show keybindings (in tree) |
 
-## Usage
+## Development
 
-### Nix Flake
+For a development environment, you can use `nix develop` to open a shell with tools used to work on this module (Lua LSP, `nixos-rebuild`, etc).
 
-- Review the documentation on using [home-manager with Nix Flakes][7].
-- Add a `neovim-config` input to your Flake:
+The configuration can be tested quickly with `nix run`, on an isolated VM (Linux only), or by referencing it locally from another Nix flake.
 
-  ```nix
-  {
-    inputs = {
-      nixpkgs.url = "nixpkgs/nixos-22.11";
-      # ...
-      neovim-config = {
-        url = "git+https://gitlab.chromabits.com/etcinit/neovim-config.git";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-    };
-    # ...
-  }
-  ```
-- Import the module in one of your `home-manager` modules:
+[Direnv][4] is also pre-configured. Use `direnv allow` to automatically enter the devshell when `cd`-ing to the repository.
 
-  ```nix
-  {inputs, ...}:
-  {
-    # ...
-    imports = [
-      inputs.neovim-config.nixosModules.home-manager.neovim-config↴
-    ];
-  }
-  ```
-- Use `home-manager switch` to apply the new configuration.
-
-## Reproducible Environment
+### Reproducible Environment
 
 When using this configuration as a `home-manager` module, it is possible to build a reproducible environment. Thanks to Nix's reproducible builds, this module will always pull the same versions of all packages/plugins, unless the flake lock is updated.
 
@@ -169,14 +186,6 @@ an effort to simplify my setup, I've opted for a full Nix-based solution,
 specially now that most of my systems use Nix. This results in slightly slower
 startup times (a few 100 ms), but most plugins are now using definitions from
 nixpkgs. Version upgrades will follow the NixOS release cycle.
-
-## Development
-
-For a development environment, you can use `nix develop` to open a shell with tools used to work on this module (Lua LSP, `nixos-rebuild`, etc).
-
-The configuration can be tested quickly with `nix run`, on an isolated VM (Linux only), or by referencing it locally from another Nix flake.
-
-[Direnv][4] is also pre-configured. Use `direnv allow` to automatically enter the devshell when `cd`-ing to the repository.
 
 ### Quick Test
 
