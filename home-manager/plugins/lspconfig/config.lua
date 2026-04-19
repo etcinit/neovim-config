@@ -89,13 +89,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
       vim.tbl_extend('force', opts, { desc = "LSP: Code action" }))
 
-    vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float,
+    vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float,
       vim.tbl_extend('force', opts, { desc = "Diagnostics: Open float" }))
     vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, vim.tbl_extend('force', opts, { desc = "Diagnostics: Previous" }))
     vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end, vim.tbl_extend('force', opts, { desc = "Diagnostics: Next" }))
     vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
       vim.tbl_extend('force', opts, { desc = "Diagnostics: Set loclist" }))
-    vim.keymap.set('n', '<leader>so', function()
+    vim.keymap.set('n', '<leader>ss', function()
       require('telescope.builtin').lsp_document_symbols()
     end, vim.tbl_extend('force', opts, { desc = "LSP: Document symbols" }))
     vim.keymap.set('n', '<leader>cf', function()
