@@ -4,13 +4,13 @@ require('gitsigns').setup({
     local opts = { noremap = true, silent = true, buffer = bufnr }
 
     -- Hunk navigation
-    vim.keymap.set('n', ']c', function()
+    vim.keymap.set('n', ']h', function()
       if vim.wo.diff then return ']c' end
       vim.schedule(function() gs.next_hunk() end)
       return '<Ignore>'
     end, { noremap = true, silent = true, buffer = bufnr, expr = true, desc = "Gitsigns: Next hunk" })
 
-    vim.keymap.set('n', '[c', function()
+    vim.keymap.set('n', '[h', function()
       if vim.wo.diff then return '[c' end
       vim.schedule(function() gs.prev_hunk() end)
       return '<Ignore>'
