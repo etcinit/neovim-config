@@ -18,8 +18,8 @@ map('n', '<C-k>', '<C-w>k', {}, "Window: Move up")
 map('n', '<C-l>', '<C-w>l', {}, "Window: Move right")
 
 -- Buffer Switching
-map('', 'gn', ':bn<CR>', {}, "Buffer: Next")
-map('', 'gp', ':bp<CR>', {}, "Buffer: Previous")
+map('n', '<S-l>', ':bn<CR>', {}, "Buffer: Next")
+map('n', '<S-h>', ':bp<CR>', {}, "Buffer: Previous")
 map('n', '<leader>bd', ':bd<CR>', {}, "Buffer: Delete")
 
 -- Tab Switching (Ctrl-Tab)
