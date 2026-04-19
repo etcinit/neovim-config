@@ -98,7 +98,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>so', function()
       require('telescope.builtin').lsp_document_symbols()
     end, vim.tbl_extend('force', opts, { desc = "LSP: Document symbols" }))
-    vim.keymap.set('n', '<space>f', function()
+    vim.keymap.set('n', '<leader>cf', function()
       vim.lsp.buf.format({ async = true })
     end, vim.tbl_extend('force', opts, { desc = "LSP: Format" }))
   end,
