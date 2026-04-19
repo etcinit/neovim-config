@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, vim.tbl_extend('force', opts, { desc = "LSP: List workspace folders" }))
     vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
       vim.tbl_extend('force', opts, { desc = "LSP: Type definition" }))
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = "LSP: Rename symbol" }))
+    vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = "LSP: Rename symbol" }))
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('force', opts, { desc = "LSP: Find references" }))
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
       vim.tbl_extend('force', opts, { desc = "LSP: Code action" }))
