@@ -25,6 +25,10 @@ map('n', '<S-l>', ':bn<CR>', {}, "Buffer: Next")
 map('n', '<S-h>', ':bp<CR>', {}, "Buffer: Previous")
 map('n', '<leader>bd', ':bd<CR>', {}, "Buffer: Delete")
 
+-- Better indenting (stay in visual mode)
+map('v', '<', '<gv', {}, "Indent: Dedent and reselect")
+map('v', '>', '>gv', {}, "Indent: Indent and reselect")
+
 -- Tab Switching (Ctrl-Tab)
 map('', '<C-Tab>', ':<C-U>tabnext<CR>', { noremap = true }, "Tab: Next")
 map('', '<C-S-Tab>', ':<C-U>tabprevious<CR>', { noremap = true }, "Tab: Previous")
