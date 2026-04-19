@@ -7,6 +7,9 @@ vim.api.nvim_create_user_command('Q', 'q', {})
 vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('WQ', 'wq', {})
 
+-- Clear search highlight
+map('n', '<Esc>', '<cmd>nohlsearch<CR>', {}, "Clear search highlight")
+
 -- Window Navigation
 map('', '<S-Up>', '<C-w><Up>', {}, "Window: Move up")
 map('', '<S-Down>', '<C-w><Down>', {}, "Window: Move down")
