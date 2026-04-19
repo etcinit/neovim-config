@@ -10,7 +10,7 @@ wk.add({
   { "<leader>b", group = "Buffer" },
   { "<leader>d", group = "Debug/Diagnostics" },
   { "<leader>c", group = "Code" },
-  { "<leader>s", group = "Symbols" },
+  { "<leader>s", group = "Search/Symbols" },
   { "<leader>l", group = "Log" },
   { "g", group = "Go to" },
 })
