@@ -6,10 +6,124 @@ My personal [Neovim][1] configuration as a [home-manager][2] module.
 
 ## Overview
 
-- Reproducible environment thanks to [Nix][5]
-- Can be used standalone or imported in a home-manager configuration.
+- Reproducible environment thanks to [Nix][5]. All plugins and dependencies are managed through Nix — no runtime plugin managers.
+- Designed to be imported as a [home-manager][2] module in a Nix flake.
 - Available as a VM for trying out the configuration and testing.
 - Focused on Rust, Typescript, and Nix development.
+
+## Configuration
+
+The leader key is `,`. Press it and wait to see available bindings via [which-key](https://github.com/folke/which-key.nvim).
+
+### Plugins
+
+| Category   | Plugins                                                                   |
+|------------|---------------------------------------------------------------------------|
+| UI         | tokyonight (theme), lualine (statusline), barbar (buffer tabs), nvim-tree (file explorer), indent-blankline, scrollbar |
+| Editor     | telescope (fuzzy finder), trouble (diagnostics panel), which-key (keybinding hints), toggleterm (terminal), conform (format-on-save) |
+| Completion | nvim-cmp, luasnip                                                         |
+| LSP        | nvim-lspconfig — rust_analyzer, hls, nil_ls, ts_ls, eslint, basedpyright, ruff, lua_ls, nixd |
+| Git        | gitsigns                                                                  |
+| Syntax     | nvim-treesitter                                                           |
+| Debug      | nvim-dap, dap-ui, one-small-step-for-vimkind                             |
+
+### Key Bindings
+
+#### General
+
+| Key              | Mode   | Action                     |
+|------------------|--------|----------------------------|
+| `<Esc>`          | Normal | Clear search highlight      |
+| `<C-h/j/k/l>`   | Normal | Window navigation           |
+| `<S-h>` / `<S-l>` | Normal | Previous / next buffer    |
+| `<A-j>` / `<A-k>` | Normal/Visual | Move line(s) down/up |
+| `<` / `>`        | Visual | Indent/dedent with reselect |
+| `<Esc><Esc>`     | Terminal | Exit terminal mode        |
+| `<C-\>`          | Normal | Toggle terminal             |
+
+#### `<leader>f` — Find
+
+| Key            | Action       |
+|----------------|--------------|
+| `<leader>ff`   | Find files   |
+| `<leader>fb`   | Find buffers |
+| `<leader>fg`   | Live grep    |
+
+#### `<leader>s` — Search
+
+| Key            | Action              |
+|----------------|---------------------|
+| `<leader>sa`   | Telescope finders   |
+| `<leader>sh`   | Help tags           |
+| `<leader>sc`   | Commands            |
+| `<leader>sk`   | Keymaps             |
+
+#### `<leader>c` — Code
+
+| Key            | Action         |
+|----------------|----------------|
+| `<leader>cr`   | Rename symbol  |
+| `<leader>ca`   | Code action    |
+| `<leader>cf`   | Format         |
+
+#### `<leader>x` — Trouble
+
+| Key            | Action                        |
+|----------------|-------------------------------|
+| `<leader>xx`   | Workspace diagnostics         |
+| `<leader>xb`   | Buffer diagnostics            |
+| `<leader>xl`   | Location list                 |
+| `<leader>xq`   | Quickfix                      |
+| `<leader>xr`   | LSP references                |
+| `<leader>xd`   | LSP definitions               |
+| `<leader>xD`   | LSP declarations              |
+| `<leader>xt`   | LSP type definitions          |
+
+#### `<leader>h` — Git Hunks
+
+| Key            | Action            |
+|----------------|-------------------|
+| `]h` / `[h`    | Next / prev hunk  |
+| `<leader>hs`   | Stage hunk        |
+| `<leader>hr`   | Reset hunk        |
+| `<leader>hS`   | Stage buffer      |
+| `<leader>hu`   | Undo stage hunk   |
+| `<leader>hR`   | Reset buffer      |
+| `<leader>hp`   | Preview hunk      |
+| `<leader>hb`   | Blame line         |
+| `<leader>hd`   | Diff this         |
+
+#### `g` — Go to (LSP)
+
+| Key   | Action          |
+|-------|-----------------|
+| `gd`  | Definition      |
+| `gD`  | Declaration     |
+| `gi`  | Implementation  |
+| `gr`  | References      |
+| `K`   | Hover           |
+
+#### Debug (DAP)
+
+| Key            | Action                  |
+|----------------|-------------------------|
+| `<F5>`         | Continue                |
+| `<F10>`        | Step over               |
+| `<F11>`        | Step into               |
+| `<F12>`        | Step out                |
+| `<leader>b`    | Toggle breakpoint       |
+| `<leader>B`    | Conditional breakpoint  |
+| `<leader>lp`   | Log point               |
+| `<leader>dr`   | Open REPL               |
+| `<leader>dl`   | Run last                |
+
+#### File Tree
+
+| Key           | Action              |
+|---------------|----------------------|
+| `<leader>e`   | Toggle file tree     |
+| `<leader>o`   | Focus file tree      |
+| `?`           | Show keybindings (in tree) |
 
 ## Usage
 
