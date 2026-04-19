@@ -25,6 +25,12 @@ map('n', '<S-l>', ':bn<CR>', {}, "Buffer: Next")
 map('n', '<S-h>', ':bp<CR>', {}, "Buffer: Previous")
 map('n', '<leader>bd', ':bd<CR>', {}, "Buffer: Delete")
 
+-- Move lines up/down
+map('n', '<A-j>', '<cmd>m .+1<CR>==', {}, "Move: Line down")
+map('n', '<A-k>', '<cmd>m .-2<CR>==', {}, "Move: Line up")
+map('v', '<A-j>', ":m '>+1<CR>gv=gv", {}, "Move: Selection down")
+map('v', '<A-k>', ":m '<-2<CR>gv=gv", {}, "Move: Selection up")
+
 -- Better indenting (stay in visual mode)
 map('v', '<', '<gv', {}, "Indent: Dedent and reselect")
 map('v', '>', '>gv', {}, "Indent: Indent and reselect")
