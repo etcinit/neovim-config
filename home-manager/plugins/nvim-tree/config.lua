@@ -34,6 +34,16 @@ local setup_tree = function()
     },
   }
 
+  -- Show all nvim-tree keybindings via which-key when pressing ? in the tree.
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'NvimTree',
+    callback = function(args)
+      vim.keymap.set('n', '?', function()
+        require('which-key').show({ buf = args.buf })
+      end, { buffer = args.buf, desc = "NvimTree: Show keybindings" })
+    end,
+  })
+
   -- Bindings
   vim.keymap.set('n', '<leader>e', function()
     local nt_api = require("nvim-tree.api")
