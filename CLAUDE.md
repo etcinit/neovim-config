@@ -9,7 +9,7 @@ A personal Neovim configuration packaged as a Nix home-manager module. All plugi
 ## Development commands
 
 ```sh
-nix develop              # Enter devshell (lua-language-server, nixfmt-rfc-style)
+nix develop              # Enter devshell (lua-language-server, nixfmt)
 nix run .                # Quick-test the config in an isolated Neovim instance (NVIM_APPNAME=nvim-config-test)
 nix fmt                  # Format all Nix files (nixfmt-tree)
 nixos-rebuild build-vm --flake .\#vm  # Build test VM (Linux only)

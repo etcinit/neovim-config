@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   parsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
     python
     cpp
@@ -8,18 +9,18 @@
     typescript
     markdown
   ];
-in {
+in
+{
   config = {
     programs.neovim = {
-      plugins =
-        [
-          {
-            type = "lua";
-            config = builtins.readFile ./config.lua;
-            plugin = pkgs.vimPlugins.nvim-treesitter;
-          }
-        ]
-        ++ parsers;
+      plugins = [
+        {
+          type = "lua";
+          config = builtins.readFile ./config.lua;
+          plugin = pkgs.vimPlugins.nvim-treesitter;
+        }
+      ]
+      ++ parsers;
     };
   };
 }

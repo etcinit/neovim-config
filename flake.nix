@@ -1,9 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.11";
+    nixpkgs.url = "nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -20,6 +20,9 @@
       let
         pkgs = (import nixpkgs) {
           inherit system;
+          # barbar.nvim is flagged unfree in nixpkgs 26.05 due to the JSON
+          # License ("used for Good, not Evil"); allow just that package.
+          config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "barbar.nvim" ];
         };
 
         # Bundle src/ (lua/, after/, ftdetect/) as a vim plugin so it lands
@@ -80,6 +83,10 @@
                 { pkgs, ... }:
                 {
                   system.stateVersion = "23.11";
+
+                  # See the allowUnfreePredicate note on the pkgs import above.
+                  nixpkgs.config.allowUnfreePredicate =
+                    pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "barbar.nvim" ];
 
                   services.getty.autologinUser = "neovim";
 
@@ -153,7 +160,7 @@
             pkgs.lib.optional stdenv.isLinux nixos-rebuild
             ++ [
               lua-language-server
-              nixfmt-rfc-style
+              nixfmt
             ];
         };
 

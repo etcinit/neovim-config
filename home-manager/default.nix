@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ./plugins/barbar
     ./plugins/cmp
@@ -30,7 +31,12 @@
 
       defaultEditor = true;
 
-      extraLuaConfig = ''
+      # Adopt the 26.05 defaults: no Ruby/Python3 remote-plugin providers
+      # (this config uses only Lua plugins and LSP servers).
+      withRuby = false;
+      withPython3 = false;
+
+      initLua = ''
         vim.g.mapleader = ","
 
         require('options')
@@ -47,7 +53,8 @@
       target = ".config/nvim/lua";
     };
 
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       [
         neovim-remote
         # GCC is needed by some plugins.
