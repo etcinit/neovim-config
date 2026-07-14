@@ -51,8 +51,22 @@
 
         neovimPackage = hmConfig.config.programs.neovim.finalPackage;
 
+        # As of home-manager 26.05, plugins are installed to the data-dir
+        # packpath (~/.local/share/nvim/site/pack/hm) and the finalPackage
+        # wrapper no longer bakes them in -- they are only discoverable after
+        # home-manager activation. `nix run` bypasses activation, so we
+        # reconstruct that site directory here and hand it to neovim via
+        # 'packpath' below. The runtimePlugin (our src/ bundle) lives in the
+        # same pack, so this also makes require('options') etc. resolve.
+        packSite = pkgs.linkFarm "nvim-config-site" [
+          {
+            name = "pack/hm";
+            path = hmConfig.config.xdg.dataFile."nvim/site/pack/hm".source;
+          }
+        ];
+
         # Extract the init.lua that home-manager generates (it contains
-        # extraLuaConfig + all plugin configs). Without this, neovim launches
+        # initLua + all plugin configs). Without this, neovim launches
         # with plugins on rtp but no configuration applied.
         initLua = pkgs.writeText "init.lua" hmConfig.config.xdg.configFile."nvim/init.lua".text;
       in
@@ -69,7 +83,8 @@
           '';
 
           neovim = pkgs.writeShellScriptBin "nvim" ''
-            exec env NVIM_APPNAME=nvim-config-test ${neovimPackage}/bin/nvim -u ${initLua} "$@"
+            exec env NVIM_APPNAME=nvim-config-test ${neovimPackage}/bin/nvim \
+              --cmd "set packpath^=${packSite}" -u ${initLua} "$@"
           '';
 
           default = self.packages.${system}.neovim;
