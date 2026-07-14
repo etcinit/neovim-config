@@ -61,8 +61,14 @@ local setup_tree = function()
   local nvim_tree_events = require('nvim-tree.events')
   local bufferline_api = require('barbar.api')
 
+  -- nvim-tree no longer exposes the tree width via `view.View.width`; query
+  -- the actual tree window instead (0 when the tree is closed).
   local function get_tree_size()
-    return require 'nvim-tree.view'.View.width
+    local winid = require('nvim-tree.view').winid()
+    if winid and vim.api.nvim_win_is_valid(winid) then
+      return vim.api.nvim_win_get_width(winid)
+    end
+    return 0
   end
 
   nvim_tree_events.subscribe('TreeOpen', function()
