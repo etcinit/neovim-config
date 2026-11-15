@@ -88,86 +88,42 @@
           '';
 
           default = self.packages.${system}.neovim;
-        }
-        // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
-          nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [
-              home-manager.nixosModules.home-manager
-              (
-                { pkgs, ... }:
-                {
-                  system.stateVersion = "23.11";
-
-                  # See the allowUnfreePredicate note on the pkgs import above.
-                  nixpkgs.config.allowUnfreePredicate =
-                    pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "barbar.nvim" ];
-
-                  services.getty.autologinUser = "neovim";
-
-                  virtualisation.vmVariant = {
-                    virtualisation = {
-                      graphics = false;
-                    };
-                  };
-
-                  users.groups.neovim = { };
-                  users.users.neovim = {
-                    initialPassword = "example";
-                    isNormalUser = true;
-                    group = "neovim";
-                    extraGroups = [ "wheel" ];
-                  };
-
-                  security.sudo = {
-                    enable = true;
-                    extraRules = [
-                      {
-                        users = [ "neovim" ];
-                        commands = [
-                          {
-                            command = "/run/current-system/sw/bin/shutdown";
-                            options = [ "NOPASSWD" ];
-                          }
-                        ];
-                      }
-                    ];
-                  };
-
-                  environment.systemPackages = [
-                    pkgs.git
-                    pkgs.lua-language-server
-                  ];
-
-                  home-manager = {
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-
-                    users.neovim =
-                      { ... }:
-                      {
-                        imports = [ self.nixosModules.home-manager.neovim-config ];
-
-                        config = {
-                          home = {
-                            homeDirectory = "/home/neovim";
-                            stateVersion = "23.11";
-                          };
-
-                          programs.bash = {
-                            enable = true;
-                            bashrcExtra = ''
-                              ${self.packages.${system}.resize-tty}/bin/resize-tty
-                            '';
-                          };
-                        };
-                      };
-                  };
-                }
-              )
-            ];
-          };
         };
+
+        checks.boot =
+          pkgs.runCommand "neovim-boot-check"
+            {
+              nativeBuildInputs = [
+                self.packages.${system}.neovim
+                # gitsigns reports an error at setup if git is missing.
+                pkgs.git
+              ];
+            }
+            ''
+              export HOME=$(mktemp -d)
+              cd "$HOME"
+
+              # Open one file per filetype we care about so FileType/BufRead
+              # autocmds, ftplugins, and treesitter run too.
+              echo 'local x = 1'    > t.lua
+              echo '{ }'            > t.nix
+              echo '# hi'           > t.md
+              echo 'fn main() {}'   > t.rs
+              echo 'main = pure ()' > t.hs
+
+              # Neovim exits 0 even when init or a plugin config throws, so
+              # treat anything on stderr as a failure.
+              timeout 60 nvim --headless t.lua t.nix t.md t.rs t.hs \
+                -c 'bufdo edit' -c 'qa!' 2> stderr.log
+
+              if [ -s stderr.log ]; then
+                echo "neovim reported errors during startup:"
+                cat stderr.log
+                exit 1
+              fi
+
+              touch $out
+            '';
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs =
@@ -184,5 +140,97 @@
     )
     // {
       nixosModules.home-manager.neovim-config = import ./home-manager;
+
+      # Test VM: nixos-rebuild build-vm --flake .#vm
+      nixosConfigurations.vm =
+        let
+          system = "x86_64-linux";
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            home-manager.nixosModules.home-manager
+            (
+              { pkgs, ... }:
+              {
+                system.stateVersion = "23.11";
+
+                # This config is only ever built as a VM (where vmVariant
+                # supplies the real values), but `nix flake check` evaluates
+                # the plain toplevel, which asserts these are set.
+                fileSystems."/" = {
+                  device = "/dev/disk/by-label/nixos";
+                  fsType = "ext4";
+                };
+                boot.loader.grub.devices = [ "nodev" ];
+
+                # See the allowUnfreePredicate note on the pkgs import above.
+                nixpkgs.config.allowUnfreePredicate =
+                  pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "barbar.nvim" ];
+
+                services.getty.autologinUser = "neovim";
+
+                virtualisation.vmVariant = {
+                  virtualisation = {
+                    graphics = false;
+                  };
+                };
+
+                users.groups.neovim = { };
+                users.users.neovim = {
+                  initialPassword = "example";
+                  isNormalUser = true;
+                  group = "neovim";
+                  extraGroups = [ "wheel" ];
+                };
+
+                security.sudo = {
+                  enable = true;
+                  extraRules = [
+                    {
+                      users = [ "neovim" ];
+                      commands = [
+                        {
+                          command = "/run/current-system/sw/bin/shutdown";
+                          options = [ "NOPASSWD" ];
+                        }
+                      ];
+                    }
+                  ];
+                };
+
+                environment.systemPackages = [
+                  pkgs.git
+                  pkgs.lua-language-server
+                ];
+
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+
+                  users.neovim =
+                    { ... }:
+                    {
+                      imports = [ self.nixosModules.home-manager.neovim-config ];
+
+                      config = {
+                        home = {
+                          homeDirectory = "/home/neovim";
+                          stateVersion = "23.11";
+                        };
+
+                        programs.bash = {
+                          enable = true;
+                          bashrcExtra = ''
+                            ${self.packages.${system}.resize-tty}/bin/resize-tty
+                          '';
+                        };
+                      };
+                    };
+                };
+              }
+            )
+          ];
+        };
     };
 }
