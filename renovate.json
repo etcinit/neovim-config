@@ -1,3 +1,28 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "platformAutomerge": false,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "nix": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Merge non-major action updates once CI is green",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "automerge": true
+    }
+  ]
 }
